@@ -36,6 +36,14 @@ class LinkedList:
             print("Unexpected error occured: {e}".format(e=e))
             return 1
     
+    def getLength(self):
+        curr = self.head
+        res = 0
+        while curr != None:
+            res += 1
+            curr = curr.next
+        return res
+    
     def print_all_nodes (self):
         curr = self.head
         cnt = 1
