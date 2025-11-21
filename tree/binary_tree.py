@@ -24,21 +24,22 @@ class BinaryTree:
         return self.root
 
     def list_to_tree_iterative(self, arr):
+        if not arr:
+            return None
         q = []
-        i = 0
+        i = 1
         n = len(arr)
-        root = TreeNode(arr[i])
+        root = TreeNode(arr[0])
         q.append(root)
         while i < n:
-            currVal = q.pop()
-            currNode = TreeNode(currVal)
+            currNode = q.pop(0)
             if i < n:
-                i += 1
                 currNode.left = TreeNode(arr[i])
+                i += 1
                 q.append(currNode.left)
             if i < n:
-                i += 1
                 currNode.right = TreeNode(arr[i])
+                i += 1
                 q.append(currNode.right)
         self.root = root
         return self.root
@@ -47,8 +48,32 @@ class BinaryTree:
         def inorder_helper(node):
             if node:
                 inorder_helper(node.left)
-                print()
+                print(f"curr node: {node.value}")
+                inorder_helper(node.right)
+        inorder_helper(self.root)
+        return
+
+    def preorder_traversal(self):
+        def preorder_helper(node):
+            if node:
+                print(f"curr node: {node.value}")
+                preorder_helper(node.left)
+                preorder_helper(node.right)
+        preorder_helper(self.root)
+        return
+    
+    def postorder_traversal(self):
+        def postorder_helper(node):
+            if node:
+                postorder_helper(node.left)
+                postorder_helper(node.right)
+                print(f"curr node: {node.value}")
+        postorder_helper(self.root)
+        return
 
 
 if __name__ == "__main__":
     arr1 = [1, 2, 3, 4, 5, 6, 7, 8]
+    bitree = BinaryTree()
+    bitree.list_to_tree_iterative(arr1)
+    bitree.postorder_traversal()
