@@ -44,36 +44,53 @@ class BinaryTree:
         self.root = root
         return self.root
 
-    def inorder_traversal(self):
+    def inorder_traversal(self, fn):
         def inorder_helper(node):
             if node:
                 inorder_helper(node.left)
-                print(f"curr node: {node.value}")
+                fn(node)
                 inorder_helper(node.right)
+
         inorder_helper(self.root)
         return
 
-    def preorder_traversal(self):
+    def preorder_traversal(self, fn):
         def preorder_helper(node):
             if node:
-                print(f"curr node: {node.value}")
+                fn(node)
                 preorder_helper(node.left)
                 preorder_helper(node.right)
+
         preorder_helper(self.root)
         return
-    
-    def postorder_traversal(self):
+
+    def postorder_traversal(self, fn):
         def postorder_helper(node):
             if node:
                 postorder_helper(node.left)
                 postorder_helper(node.right)
-                print(f"curr node: {node.value}")
+                fn(node)
+
         postorder_helper(self.root)
         return
+
+    def print_tree(self, order):
+        def print_node(node):
+            print(
+                f"value: {node.value}, left: {node.left.value if node.left else 'None'}, right: {node.right.value if node.right else 'None'}"
+            )
+
+        if order == " in":
+            self.inorder_traversal(print_node)
+        elif order == "pre":
+            self.preorder_traversal(print_node)
+        elif order == "post":
+            self.postorder_traversal(print_node)
+        else:
+            raise Exception("Unknown order.")
 
 
 if __name__ == "__main__":
     arr1 = [1, 2, 3, 4, 5, 6, 7, 8]
     bitree = BinaryTree()
     bitree.list_to_tree_iterative(arr1)
-    bitree.postorder_traversal()
