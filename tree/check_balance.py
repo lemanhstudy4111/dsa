@@ -7,8 +7,8 @@ def check_balance(bt):
         if not node:
             return (0, True)
         # leaf
-        if not node.left or not node.right:
-            return (0, True)
+        # if not node.left and not node.right:
+        #     return (0, True)
         left_d = check_balance_helper(node.left)
         right_d = check_balance_helper(node.right)
         if not left_d[1] or not right_d[1]:
@@ -29,3 +29,15 @@ class TestClass:
         bitree = BinaryTree()
         bitree.list_to_tree_iterative(arr1)
         assert check_balance(bitree)
+
+    def test_non_balance(self):
+        bitree = BinaryTree()
+        root = TreeNode(
+            1,
+            left=TreeNode(
+                2, left=TreeNode(3, left=None, right=None), right=None
+            ),
+            right=None,
+        )
+        bitree.root = root
+        assert check_balance(bitree) == False
